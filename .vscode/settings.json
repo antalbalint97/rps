@@ -1,9 +1,0 @@
-{
-  "python.envFile": "${workspaceFolder}/.env",
-  "python.analysis.extraPaths": ["./RPS"],
-  "editor.decorations.badges": false,
-  "editor.showUnused": false,
-  "editor.codeLens": false,
-  "problems.decorations.enabled": false,
-  "editor.glyphMargin": false
-}
