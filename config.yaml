@@ -1,0 +1,22 @@
+# RPS/config.yaml
+
+# --- Game Parameters ---
+num_plays_per_game: 2000
+num_games_per_match: 100
+no_point_threshold: 0.001
+
+# --- Scoring ---
+max_score: 100.0
+
+# --- Moves ---
+moves:
+  - rock
+  - paper
+  - scissors
+
+# --- RL Training ---
+rl_model_path: models/ppo_agent.pkl
+rl_training_episodes: 5000
+
+# --- Streamlit Dashboard ---
+dashboard_port: 8501
