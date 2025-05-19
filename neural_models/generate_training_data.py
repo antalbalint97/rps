@@ -18,6 +18,10 @@ from strategies.mirrorbaiter_strategy import MirrorBaiterStrategy
 from strategies.delayedmirror_strategy import DelayedMirrorStrategy
 from strategies.noisecounter_strategy import NoiseCounterStrategy
 from strategies.entropymax_strategy import EntropyMaximizerStrategy
+from strategies.adaptiveswitcher_strategy import AdaptiveSwitcherStrategy
+from strategies.patternhunter_strategy import PatternHunterStrategy
+from strategies.bayesian_strategy import BayesianUpdateStrategy
+
 
 # Settings
 NUM_PLAYS_PER_GAME = 2000
@@ -43,7 +47,10 @@ strategies = [
     MirrorBaiterStrategy,
     DelayedMirrorStrategy,
     NoiseCounterStrategy,
-    EntropyMaximizerStrategy
+    EntropyMaximizerStrategy,
+    AdaptiveSwitcherStrategy,
+    PatternHunterStrategy,
+    BayesianUpdateStrategy
 ]
 
 engine = GameEngine()

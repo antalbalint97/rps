@@ -4,6 +4,7 @@ import random
 from collections import deque
 import torch.nn as nn
 
+# Define model architecture
 class RPSNet(nn.Module):
     def __init__(self):
         super().__init__()
@@ -18,18 +19,25 @@ class RPSNet(nn.Module):
     def forward(self, x):
         return self.net(x)
 
+# Strategy wrapper
 class FMPNetStrategy:
     name = "FMPNetStrategy"
 
     def __init__(self):
-        model_path = os.environ.get("MODEL_PATH", "rps_model.pt")
-        self.model = RPSNet()
-        self.model.load_state_dict(torch.load(model_path, map_location=torch.device("cpu")))
+        model_path = os.environ.get("MODEL_PATH", "neural_models/fmpnet/fmpnet.pt")
+
+        self.model = self.load_model(model_path)
         self.model.eval()
 
         self.history = deque(maxlen=4)
         self.move_to_idx = {"rock": 0, "paper": 1, "scissors": 2}
         self.idx_to_move = ["rock", "paper", "scissors"]
+
+    def load_model(self, path):
+        model = RPSNet()
+        state_dict = torch.load(path, map_location=torch.device("cpu"))
+        model.load_state_dict(state_dict)
+        return model
 
     def play(self):
         if len(self.history) < 4:
