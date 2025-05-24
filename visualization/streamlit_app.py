@@ -26,10 +26,10 @@ from strategies.noisecounter_strategy import NoiseCounterStrategy
 from strategies.entropymax_strategy import EntropyMaximizerStrategy
 from strategies.adaptiveswitcher_strategy import AdaptiveSwitcherStrategy
 from strategies.patternhunter_strategy import PatternHunterStrategy
-from strategies.bayesian_strategy import BayesianUpdateStrategy
-from strategies.fmpnet_strategy import FMPNetStrategy
-from strategies.lstm_strategy import LSTMStrategy
-from strategies.gru_strategy import GRUStrategy
+from strategies.bayesian_strategy import BayesianNGramStrategy
+# from strategies.fmpnet_strategy import FMPNetStrategy
+# from strategies.lstm_strategy import LSTMStrategy
+# from strategies.gru_strategy import GRUStrategy
 from strategies.thompsonmeta_strategy import ThompsonMetaStrategy
 from strategies.thompsonmetav2_strategy import ThompsonMetaV2
 from strategies.thompsonmetav3_strategy import ThompsonMetaV3_Contextual
@@ -44,6 +44,9 @@ from strategies.antimetav4_strategy import AntiMetaV4_MirrorDiverge
 from strategies.antimetav5_strategy import AntiMetaV5_OverfitPunisher
 from strategies.metalearnerv7_strategy import MetaLearnerV7_ShadowQ
 from strategies.metalearnerv8_strategy import MetaLearnerV8_HybridDeceptiveQ
+from strategies.dreamweaverv7_strategy import DreamWeaverV7
+from strategies.shinydiamond_strategy import ShinyDiamond
+
 
 
 
@@ -64,7 +67,7 @@ strategy_map = {
     "EntropyMaximizerStrategy": EntropyMaximizerStrategy,
     "AdaptiveSwitcherStrategy": AdaptiveSwitcherStrategy,
     "PatternHunterStrategy": PatternHunterStrategy,
-    "BayesianStrategy": BayesianUpdateStrategy,
+    "BayesianNGramStrategy": BayesianNGramStrategy,
     "ThompsonMetaStrategy": ThompsonMetaStrategy,
     "ThompsonMetaV2": ThompsonMetaV2,
     "ThompsonMetaV3_Contextual": ThompsonMetaV3_Contextual,
@@ -78,7 +81,9 @@ strategy_map = {
     "AntiMetaV4_MirrorDiverge": AntiMetaV4_MirrorDiverge,
     "AntiMetaV5_OverfitPunisher": AntiMetaV5_OverfitPunisher,
     "MetaLearnerV7_ShadowQ": MetaLearnerV7_ShadowQ,
-    "MetaLearnerV8_HybridDeceptiveQ": MetaLearnerV8_HybridDeceptiveQ
+    "MetaLearnerV8_HybridDeceptiveQ": MetaLearnerV8_HybridDeceptiveQ,
+    "DreamWeaverV7": DreamWeaverV7,
+    "ShinyDiamond": ShinyDiamond
 
 }
 
@@ -98,7 +103,7 @@ strategy_descriptions = {
     "EntropyMaximizerStrategy": "Aims to maximize uncertainty for the opponent by making moves harder to model.",
     "PatternHunterStrategy": "Detects short-term patterns in opponent’s behavior and counters them directly.",
     "AdaptiveSwitcherStrategy": "Switches between strategies mid-game based on performance metrics.",
-    "BayesianStrategy": "Uses Bayesian inference to update and predict the most likely next move.",
+    "BayesianNGramStrategy": "Predicts the opponent’s next move based on recent move sequences using Bayesian inference with smoothing and decay for adaptive pattern recognition."",
     "ThompsonMetaStrategy": "Uses classic Thompson Sampling to dynamically choose between sub-strategies based on their win/loss records. Balances exploration and exploitation by sampling from a Beta distribution. Adapts to unknown or changing opponents over time.",
     "ThompsonMetaV2": "Enhances Thompson Sampling by using score-based rewards (+1/-1/0) instead of binary outcomes. Applies exponential decay to past results, allowing the strategy to remain responsive to recent opponent behavior while discounting outdated performance.",
     "ThompsonMetaV3_Contextual": "Introduces lightweight contextual inference by segmenting opponent behavior into patterns (e.g., last 3 moves). Maintains separate Thompson statistics for each context to select strategies more intelligently based on the opponent's current play style.",
@@ -112,8 +117,9 @@ strategy_descriptions = {
     "AntiMetaV4_MirrorDiverge": "Detects if the opponent is mirroring its previous moves and activates a divergence mode to counter it. Combines Q-learning meta-control with mirror tracking logic, allowing it to break free from exploitable patterns. This strategy is particularly effective against reflective or mimic-based opponents and can revert back to normal operation once the threat is gone.",
     "AntiMetaV5_OverfitPunisher": "Detects when the opponent begins overfitting to its own behavior—especially in reinforcement-learning-based strategies—and injects variation to disrupt prediction. By tracking repeated counterattacks and penalizing static patterns, it adapts to exploit overly reactive opponents while still using a Q-learning meta-controller. Balances deceptive output with strategic robustness.",
     "MetaLearnerV7_ShadowQ": "An advanced Q-learning-based meta-strategy that blends profiling, deception, and adaptive learning. It uses opponent behavior traits (bias, repetition, switching), recent losses, and mirror detection to adjust sub-strategy selection. Injects false patterns and enters evasive high-entropy states under pressure, making it resilient against both deterministic and adaptive AI strategies.",
-    "MetaLearnerV8_HybridDeceptiveQ": "This strategy blends Q-learning with Thompson Sampling to select among sub-strategies while injecting deceptive behavior like false patterns and mirror baiting. It adapts based on opponent profiling and recent performance, leveraging both learning paradigms for robust and manipulative meta-play."
-
+    "MetaLearnerV8_HybridDeceptiveQ": "This strategy blends Q-learning with Thompson Sampling to select among sub-strategies while injecting deceptive behavior like false patterns and mirror baiting. It adapts based on opponent profiling and recent performance, leveraging both learning paradigms for robust and manipulative meta-play.",
+    "DreamWeaverV7": "DreamWeaverV7_EntropyBait is an adaptive meta-strategy that dynamically switches between multiple sub-strategies—Markov, Q-learning, and Enhanced—based on the opponent's behavioral profile. It uses a Q-learning controller to select the best-performing strategy for the current game state, characterized by opponent bias, switching frequency, and repetition. DreamWeaverV7 exploits predictable opponents with targeted counters, introduces random noise against high-entropy learners, and breaks its own patterns to avoid being exploited. It is designed to bait, adapt, and counter both deterministic and adaptive strategies, making it highly resilient in diverse RPS arenas.",
+    "ShinyDiamond": "A dynamic meta-strategy that selects among multiple sub-strategies (Markov, Delayed Enhanced, Q-Learning) using Q-learning and opponent profiling. It adapts based on detected opponent behavior—such as repetition, switching, or adaptation—and penalizes overused strategies to avoid predictability. It also tests false patterns to bait adaptive opponents, but deactivates them if ineffective, ensuring performance stability."
 
 }
 

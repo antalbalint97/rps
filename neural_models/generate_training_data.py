@@ -20,7 +20,7 @@ from strategies.noisecounter_strategy import NoiseCounterStrategy
 from strategies.entropymax_strategy import EntropyMaximizerStrategy
 from strategies.adaptiveswitcher_strategy import AdaptiveSwitcherStrategy
 from strategies.patternhunter_strategy import PatternHunterStrategy
-from strategies.bayesian_strategy import BayesianUpdateStrategy
+from strategies.bayesian_strategy import BayesianNGramStrategy
 
 
 # Settings
@@ -35,22 +35,20 @@ OUTPUT_CSV = os.path.join(BASE_DIR, "training_data.csv")
 move_to_idx = {"rock": 0, "paper": 1, "scissors": 2}
 
 strategies = [
-    RandomStrategy,
-    EnhancedStrategy,
-    CycleStrategy,
-    CopycatStrategy,
-    AlwaysRockStrategy,
-    FrequencyStrategy,
-    LastNStrategy,
-    MarkovStrategy,
-    QLearningStrategy,
-    MirrorBaiterStrategy,
-    DelayedMirrorStrategy,
-    NoiseCounterStrategy,
-    EntropyMaximizerStrategy,
-    AdaptiveSwitcherStrategy,
-    PatternHunterStrategy,
-    BayesianUpdateStrategy
+    RandomStrategy,                  # For baseline unpredictability
+    CycleStrategy,                   # For loop pattern detection
+    CopycatStrategy,                 # Mirrors your moves
+    AlwaysRockStrategy,              # Exploitable fixed behavior
+    FrequencyStrategy,               # Exploits your frequent plays
+    LastNStrategy,                   # Recent memory based
+    MarkovStrategy,                  # Conditional transition patterns
+    QLearningStrategy,               # Mildly adaptive, value-based
+    MirrorBaiterStrategy,            # Baits mirroring patterns
+    DelayedMirrorStrategy,          # Reacts with a delay
+    NoiseCounterStrategy,           # Noisy but patterned
+    AdaptiveSwitcherStrategy,       # Switches between strategies
+    PatternHunterStrategy,          # Detects and reacts to patterns
+    BayesianNGramStrategy           # Learns conditional sequences
 ]
 
 engine = GameEngine()

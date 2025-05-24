@@ -12,7 +12,7 @@ from torch.utils.data import Dataset, DataLoader
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(BASE_DIR, "..", "training_data.csv")
 MODEL_SAVE_PATH = os.path.join(BASE_DIR, "gru.pt")
-WINDOW_SIZE = 4
+WINDOW_SIZE = 3
 BATCH_SIZE = 128
 EPOCHS = 5
 LR = 0.001
@@ -61,11 +61,14 @@ class RPSDataset(Dataset):
         return torch.tensor(x, dtype=torch.float32), torch.tensor(y, dtype=torch.long)
 
 # --- TRAIN ---
+# Define the save path explicitly
+TORCHSCRIPT_PATH = r"C:\Users\Bálint\Documents\Pet_projects\RPS\neural_models\gru\gru.pt".encode('utf-8').decode()
+
 def train_model():
     dataset = RPSDataset(CSV_PATH)
     loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
-    model = GRURPSNet(input_dim=6, hidden_dim=64, output_dim=3).to(DEVICE)
+    model = GRURPSNet(input_dim=6, hidden_dim=32, output_dim=3).to(DEVICE)
     optimizer = optim.Adam(model.parameters(), lr=LR)
     criterion = nn.CrossEntropyLoss()
 
@@ -82,8 +85,14 @@ def train_model():
             total_loss += loss.item()
         print(f"Epoch {epoch+1}/{EPOCHS} - Loss: {total_loss:.4f}")
 
+    # Save the raw PyTorch model state
     torch.save(model.state_dict(), MODEL_SAVE_PATH)
     print(f"GRU model saved to: {MODEL_SAVE_PATH}")
+
+    # Save the TorchScript model to the specified path
+    scripted_model = torch.jit.script(model.cpu())  # move to CPU for compatibility
+    scripted_model.save(TORCHSCRIPT_PATH)
+    print(f"TorchScript model saved to: {TORCHSCRIPT_PATH}")
 
 if __name__ == "__main__":
     train_model()

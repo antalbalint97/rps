@@ -14,10 +14,10 @@ from strategies.noisecounter_strategy import NoiseCounterStrategy
 from strategies.entropymax_strategy import EntropyMaximizerStrategy
 from strategies.adaptiveswitcher_strategy import AdaptiveSwitcherStrategy
 from strategies.patternhunter_strategy import PatternHunterStrategy
-from strategies.bayesian_strategy import BayesianUpdateStrategy
-from strategies.fmpnet_strategy import FMPNetStrategy
-from strategies.lstm_strategy import LSTMStrategy
-from strategies.gru_strategy import GRUStrategy
+from strategies.bayesian_strategy import BayesianNGramStrategy
+# from strategies.fmpnet_strategy import FMPNetStrategy
+# from strategies.lstm_strategy import LSTMStrategy
+# from strategies.gru_strategy import GRUStrategy
 from strategies.thompsonmeta_strategy import ThompsonMetaStrategy
 from strategies.thompsonmetav2_strategy import ThompsonMetaV2
 from strategies.thompsonmetav3_strategy import ThompsonMetaV3_Contextual
@@ -32,6 +32,8 @@ from strategies.antimetav4_strategy import AntiMetaV4_MirrorDiverge
 from strategies.antimetav5_strategy import AntiMetaV5_OverfitPunisher
 from strategies.metalearnerv7_strategy import MetaLearnerV7_ShadowQ
 from strategies.metalearnerv8_strategy import MetaLearnerV8_HybridDeceptiveQ
+from strategies.dreamweaverv7_strategy import DreamWeaverV7
+from strategies.shinydiamond_strategy import ShinyDiamond
 
 
 
@@ -48,16 +50,12 @@ def main():
         MarkovStrategy,
         QLearningStrategy,
         MirrorBaiterStrategy,
-        FMPNetStrategy,
         DelayedMirrorStrategy,
         NoiseCounterStrategy,
         EntropyMaximizerStrategy,
         AdaptiveSwitcherStrategy,
         PatternHunterStrategy,
-        BayesianUpdateStrategy,
-        FMPNetStrategy,
-        LSTMStrategy,
-        GRUStrategy,
+        BayesianNGramStrategy,
         ThompsonMetaStrategy,
         ThompsonMetaV2,
         ThompsonMetaV3_Contextual,
@@ -71,7 +69,9 @@ def main():
         AntiMetaV4_MirrorDiverge,
         AntiMetaV5_OverfitPunisher,
         MetaLearnerV7_ShadowQ,
-        MetaLearnerV8_HybridDeceptiveQ
+        MetaLearnerV8_HybridDeceptiveQ,
+        DreamWeaverV7,
+        ShinyDiamond
     ]
     
     tournament_data = engine.round_robin_tournament(strategies)

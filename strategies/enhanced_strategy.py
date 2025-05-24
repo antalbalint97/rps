@@ -1,3 +1,5 @@
+import random
+
 class EnhancedStrategy:
     name = "EnhancedStrategy"
 
@@ -6,7 +8,7 @@ class EnhancedStrategy:
 
     def play(self) -> str:
         if not self.history:
-            return "rock"
+            return random.choice(["rock", "paper", "scissors"])
 
         last_opponent_move = self.history[-1][1]
         return self.counter_move(last_opponent_move)
@@ -16,4 +18,4 @@ class EnhancedStrategy:
 
     def counter_move(self, move: str) -> str:
         counter = {"rock": "paper", "paper": "scissors", "scissors": "rock"}
-        return counter.get(move, "rock")
+        return counter.get(move, random.choice(["rock", "paper", "scissors"]))
